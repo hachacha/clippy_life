@@ -103,6 +103,25 @@ class History(gobject.GObject):
 			file = open(glipper.HISTORY_FILE, "w")
 		except IOError:
 			return # Cannot write to history file
+		import MySQLdb
+		execfile("../pass.py")
+		from datetime import datetime, timedelta
+		db = MySQLdb.connect(local_host,local_usr,local_pw,local_db)
+		cur = db.cursor()
+		formattedStr = self.history[0].encode('utf8')
+		try:
+			cur.execute("SELECT datetime FROM clippy ORDER BY id DESC limit 1;")
+			lastDate = cur.fetchone()
+			now = datetime.now()
+			import datetime
+			if now - datetime.timedelta(0,80) > lastDate[0]:
+				cur.execute("SET character_set_client = utf8;")
+				db.commit()
+				cur.execute("INSERT INTO bioText.clippy(copy) VALUES(%s)", (formattedStr,))
+				db.commit()
+				cur.close()
+		except MySQLdb.Error, e:
+			print e
 		for item in self.history:
 			assert isinstance(item, unicode)
 			string = item.encode('UTF-8')

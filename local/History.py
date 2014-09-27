@@ -97,16 +97,25 @@ class History(gobject.GObject):
 			pass
 		
 		self.emit('changed', self.history)
-		
+	def pasteTube(self,formattedStr):
+		import paramiko
+		ssh = paramiko.SSHClient()
+		ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+		ssh.connect(ssh_host, username=ssh_usr, password=ssh_pw)
+		stdin, stdout, stderr = ssh.exec_command("./tube_starter " + formattedStr)
+	
 	def save(self):
 		try:
 			file = open(glipper.HISTORY_FILE, "w")
 		except IOError:
 			return # Cannot write to history file
+		#
+		#
+		#
+		############ THIS IS JONATHAN KIRITHARAN'S CODE HERE ########################
 		import MySQLdb
-		execfile("../pass.py")
 		from datetime import datetime, timedelta
-		db = MySQLdb.connect(local_host,local_usr,local_pw,local_db)
+		db = MySQLdb.connect(local_host,local_usr,local_pw,local_db)		
 		cur = db.cursor()
 		formattedStr = self.history[0].encode('utf8')
 		try:
@@ -122,11 +131,17 @@ class History(gobject.GObject):
 				cur.close()
 		except MySQLdb.Error, e:
 			print e
+		if "youtube.com/watch?" in formattedStr:
+			self.pasteTube(formattedStr)
 		for item in self.history:
 			assert isinstance(item, unicode)
 			string = item.encode('UTF-8')
 			file.write(str(len(string)) + '\n')
 			file.write(string + '\n')
+		############### END OF JK CODE ######################
+		#
+		#
+		#
 		file.close()
 	
 	def on_max_elements_changed (self, value):

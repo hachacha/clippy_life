@@ -1,0 +1,7 @@
+#!/bin/sh
+export PYTHONPATH=$PYTHONPATH:/lib/python
+PYTHONPATH=$PYTHONPATH:$HOME/lib/python
+cd /YOURPATH/MySQL-python-1.2.4b4/
+python setup.py install --home=~
+/YOURPATHTOYTDL/youtube-dl -o "/YOURVIDEOPATH/videos/%(id)s&&&%(title)s&&&%(uploader)s&&&" --write-description $1 >> dlyt.txt
+python /YOURPATH/yt_paste.py $1 >> ytpython.txt

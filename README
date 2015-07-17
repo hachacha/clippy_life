@@ -1,5 +1,13 @@
 started this project with the intent of just keeping everything I copy in a database for notes for myself. the program is a little fickle and sometimes copies things without me copying it -- sometimes on a hilight and sometimes just whenever it wants. This isn't really undesireable because it gives a better sense of my full browsing history in a way that just saving every site I visit won't. 
 
-next step for this is to add in something that will automatically save youtube videos to my remote server. Really tired of having my favorites disappear. Every link i copy will be ssh'd and pushed on to a server.
 
-dreams: have a space on my website to go through the videos and view them off yt.
+If you just want to just track your copies you can use the second or third version of this repo or ignore the remote files and just use the local trimming out the second added function pasteTube().
+
+to run this fully you will need a remote server with python and mysql and youtube-dl
+on your local machine you will need glipper, python, mysqldb, and paramiko.
+
+remote/tube_starter:::I may have done this a bit weird if you look at the bash file created in the /remote folder. The only way I have found to get python's mysql library to work is to install it each time I want to use it. So the first few lines are installing mysqldb.
+
+remote/yt_paste:::finds file in the directory and adds it to the database
+
+local/History.py::: the glipper file that you must modify. please look for the comments.

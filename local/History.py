@@ -99,6 +99,9 @@ class History(gobject.GObject):
 		self.emit('changed', self.history)
 	def pasteTube(self,formattedStr):
 		import paramiko
+		ssh_host=""
+		ssh_usr=""
+		ssh_pw = ""
 		ssh = paramiko.SSHClient()
 		ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 		ssh.connect(ssh_host, username=ssh_usr, password=ssh_pw)

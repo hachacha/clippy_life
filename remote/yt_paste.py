@@ -41,7 +41,10 @@ if len(sys.argv) < 2:
         exit()
 else:
 	vid = sys.argv[1]
-	vid_post = vid.strip("https://www.youtube.com/watch?v=")
+	if "youtube.com/watch?" in vid:
+		vid_post = vid.strip("https://www.youtube.com/watch?v=")
+	elif "youtu.be/" in formattedStr:
+		vid_post = vid.strip("http://youtu.be/")
 	try:
 		db = MySQLdb.connect(host=rm_mysql_host,user=rm_mysql_usr,passwd=rm_mysql_pw,db=rm_mysql_db)
 		cur = db.cursor()

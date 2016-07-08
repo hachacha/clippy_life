@@ -134,7 +134,7 @@ class History(gobject.GObject):
 				cur.close()
 		except MySQLdb.Error, e:
 			print e
-		if "youtube.com/watch?" in formattedStr:
+		if "youtube.com/watch?" in formattedStr or "youtu.be/" in formattedStr:
 			self.pasteTube(formattedStr)
 		for item in self.history:
 			assert isinstance(item, unicode)
